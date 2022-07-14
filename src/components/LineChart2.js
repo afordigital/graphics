@@ -43,7 +43,7 @@ const options = {
         color: '#1a1a1a',
         font: {
           family: 'Montserrat',
-          size: 24
+          size: window.innerWidth > 400 ? 24 : 14
         },
         padding: { top: 20, left: 0, right: 0, bottom: 0 }
       }
@@ -60,7 +60,7 @@ const options = {
         color: '#1a1a1a',
         font: {
           family: 'Montserrat',
-          size: 24
+          size: window.innerWidth > 400 ? 24 : 14
         },
         padding: { top: 0, left: 0, right: 0, bottom: 20 }
       }
@@ -78,26 +78,10 @@ const options = {
         text: 'Gráfico 2',
         font: {
           family: 'Montserrat',
-          size: '24'
+          size: window.innerWidth > 400 ? 24 : 14
         }
       }
     }
-  },
-  annotation: {
-    annotations: [
-      {
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y-axis-0',
-        value: 5,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: false,
-          content: 'Test label'
-        }
-      }
-    ]
   }
 }
 
