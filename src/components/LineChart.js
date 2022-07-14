@@ -43,7 +43,7 @@ const options = {
         color: '#1a1a1a',
         font: {
           family: 'Montserrat',
-          size: window.innerWidth > 400 ? 24 : 14
+          size: window.innerWidth > 400 ? 20 : 14
         },
         padding: { top: 20, left: 0, right: 0, bottom: 0 }
       }
@@ -60,7 +60,7 @@ const options = {
         color: '#1a1a1a',
         font: {
           family: 'Montserrat',
-          size: window.innerWidth > 400 ? 24 : 14
+          size: window.innerWidth > 400 ? 20 : 14
         },
         padding: { top: 0, left: 0, right: 0, bottom: 20 }
       }
@@ -78,14 +78,14 @@ const options = {
         text: 'Gráfico 1',
         font: {
           family: 'Montserrat',
-          size: window.innerWidth > 400 ? 24 : 14
+          size: window.innerWidth > 400 ? 20 : 14
         }
       },
       subtitles: {
         display: true,
         font: {
           family: 'Montserrat',
-          size: window.innerWidth > 400 ? 24 : 14
+          size: window.innerWidth > 400 ? 20 : 14
         }
       }
     },
