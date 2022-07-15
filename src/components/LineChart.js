@@ -97,11 +97,9 @@ const options = {
 
 export default function LineChart () {
   const data = useMemo(function () {
-    const arrayx = PostData.x.filter((item, index) => index < PostData.cut_1)
     const cutArrayx = PostData.x.filter(
       (item, index) => PostData.cut_1 < index < PostData.cut_2
     )
-    const arrayy = PostData.y.filter((item, index) => index < PostData.cut_2)
 
     const jsonInput = PostData.y
 
@@ -112,21 +110,14 @@ export default function LineChart () {
       return finalMap
     }, {})
 
-    let model_arrayx = []
-
     let occurrenceMapArray = Object.keys(occurrenceMap).map(function (key) {
       return occurrenceMap[key]
     })
 
+    // Ordenamos el vector
     occurrenceMapSort = occurrenceMapArray.sort(function (a, b) {
       return a - b
     })
-
-    console.log(occurrenceMapSort)
-
-    const arrayxPercentage = arrayx.map(element =>
-      parseInt((element * 100) / PostData.cut_1)
-    )
 
     const labels = cutArrayx
 
