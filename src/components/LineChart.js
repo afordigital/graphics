@@ -26,13 +26,15 @@ ChartJS.register(
   Filler
 )
 
+let occurrenceMapSort = []
+
 const options = {
   fill: true,
   responsive: true,
   align: 'right',
   scales: {
     x: {
-      max: 400,
+      max: 854,
       grid: {
         drawBorder: false,
         color: 'rgba(10, 10, 10, 0.03)'
@@ -96,7 +98,10 @@ const options = {
 export default function LineChart () {
   const data = useMemo(function () {
     const arrayx = PostData.x.filter((item, index) => index < PostData.cut_1)
-    const labels = PostData.y.filter((item, index) => index < PostData.cut_2)
+    const cutArrayx = PostData.x.filter(
+      (item, index) => PostData.cut_1 < index < PostData.cut_2
+    )
+    const arrayy = PostData.y.filter((item, index) => index < PostData.cut_2)
 
     const jsonInput = PostData.y
 
@@ -109,46 +114,36 @@ export default function LineChart () {
 
     let model_arrayx = []
 
-    let ocurrenceMapArray = Object.keys(occurrenceMap).map(function (key) {
+    let occurrenceMapArray = Object.keys(occurrenceMap).map(function (key) {
       return occurrenceMap[key]
     })
+
+    occurrenceMapSort = occurrenceMapArray.sort(function (a, b) {
+      return a - b
+    })
+
+    console.log(occurrenceMapSort)
 
     const arrayxPercentage = arrayx.map(element =>
       parseInt((element * 100) / PostData.cut_1)
     )
 
-    console.log(arrayxPercentage)
-
-    // Creamos un nuevo array de la longitud de los puntos y que nos quedan, donde multiplicamos cada punto x por su frecuencia
-    let i = 1
-    let j = 1
-
-    while (i < arrayx.length) {
-      if (arrayx[i] == j) {
-        let operation = arrayx[i] * (ocurrenceMapArray[j] / 100 + 1)
-        if (operation > 2) {
-          operation = arrayx[i] * 2
-        }
-        model_arrayx.push(operation)
-        i++
-      } else {
-        j++
-      }
-    }
+    const labels = cutArrayx
 
     return {
       datasets: [
         {
           label: 'Sin Modelo',
-          data: arrayx,
+          data: labels,
           tension: 0.3,
           borderColor: '#4182f8',
           pointRadius: 1,
           backgroundColor: 'rgb(65, 130, 248, 0.3)'
         },
+
         {
           label: 'Con Modelo',
-          data: model_arrayx,
+          data: occurrenceMapSort,
           tension: 0.3,
           borderColor: '#70d5b3',
           pointRadius: 1,
