@@ -15,6 +15,9 @@ import {
 
 import { Line } from 'react-chartjs-2'
 
+import Chart from 'chart.js'
+import * as ChartAnnotation from 'chartjs-plugin-annotation'
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -82,6 +85,19 @@ const options = {
         }
       }
     }
+  },
+  annotation: {
+    annotations: [
+      {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y-axis-0',
+        value: '4',
+        borderColor: 'red',
+        borderWidth: 40
+      }
+    ],
+    drawTime: 'afterDraw' // (default)
   }
 }
 
@@ -118,5 +134,5 @@ export default function LineChart () {
     }
   }, [])
 
-  return <Line data={data} options={options} />
+  return <Line data={data} options={options} plugins={[ChartAnnotation]} />
 }
