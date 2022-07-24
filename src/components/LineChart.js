@@ -34,12 +34,12 @@ const options = {
   align: 'right',
   scales: {
     x: {
-      ticks: {
-        callback: function (val, index) {
-          return val / 128 + '%'
-        },
-        maxTicksLimit: 6
-      },
+      // ticks: {
+      //   callback: function (val, index) {
+      //     return val / 128 + '%'
+      //   },
+      //   maxTicksLimit: 6
+      // },
       grid: {
         drawBorder: false,
         color: 'rgba(10, 10, 10, 0.03)'
