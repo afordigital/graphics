@@ -34,12 +34,16 @@ const options = {
   align: 'right',
   scales: {
     x: {
-      // ticks: {
-      //   callback: function (val, index) {
-      //     return val / 128 + '%'
-      //   },
-      //   maxTicksLimit: 6
-      // },
+      afterFit (axis) {
+        const ticks = axis.getTicks()
+        ticks.push({ value: axis.max, label: '100%' })
+      },
+      ticks: {
+        callback: function (val, index) {
+          return parseInt((val / 122) * 0.8) + '%'
+        },
+        maxTicksLimit: 5
+      },
       grid: {
         drawBorder: false,
         color: 'rgba(10, 10, 10, 0.03)'
