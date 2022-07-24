@@ -29,8 +29,15 @@ ChartJS.register(
   Filler
 )
 
+const annotation = {
+  type: 'line',
+  borderColor: 'black',
+  borderWidth: 3,
+  scaleID: 'y',
+  value: 4
+}
+
 const options = {
-  fill: true,
   responsive: true,
   align: 'right',
   scales: {
@@ -53,6 +60,11 @@ const options = {
     },
     y: {
       min: 0,
+      ticks: {
+        callback: function (val, index) {
+          return this.getLabelForValue(val) + '%'
+        }
+      },
       grid: {
         drawBorder: false,
         color: 'rgba(10, 10, 10, 0.03)'
@@ -70,6 +82,7 @@ const options = {
     }
   },
   plugins: {
+    annotation: { annotation },
     legend: {
       display: true,
       labels: {
@@ -85,19 +98,6 @@ const options = {
         }
       }
     }
-  },
-  annotation: {
-    annotations: [
-      {
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y-axis-0',
-        value: '4',
-        borderColor: 'red',
-        borderWidth: 40
-      }
-    ],
-    drawTime: 'afterDraw' // (default)
   }
 }
 
@@ -114,12 +114,22 @@ export default function LineChart () {
     return {
       datasets: [
         {
+          label: 'Average',
+          data: [average, average, average],
+          tension: 0,
+          borderColor: 'black',
+          borderWidth: 1,
+          borderDash: [6, 6],
+          pointRadius: 0,
+          backgroundColor: 'rgb(112, 213, 179, 0)'
+        },
+        {
           label: 'Predicción',
           data: predictedData,
           tension: 0,
           borderColor: '#4182f8',
           pointRadius: 6,
-          backgroundColor: 'rgb(65, 130, 248, 0)'
+          backgroundColor: 'rgb(112, 213, 179, 0)'
         },
         {
           label: 'Real',

@@ -26,15 +26,20 @@ ChartJS.register(
   Filler
 )
 
-let occurrenceMapSort = []
-
 const options = {
   fill: true,
+  maintainAspectRatio: true,
+  aspectRatio: 2,
   responsive: true,
   align: 'right',
   scales: {
     x: {
-      max: 854,
+      ticks: {
+        callback: function (val, index) {
+          return val / 128 + '%'
+        },
+        maxTicksLimit: 6
+      },
       grid: {
         drawBorder: false,
         color: 'rgba(10, 10, 10, 0.03)'
@@ -52,6 +57,12 @@ const options = {
     },
     y: {
       min: 0,
+      ticks: {
+        callback: function (val, index) {
+          return this.getLabelForValue(val) / 10 + '%'
+        },
+        maxTicksLimit: 6
+      },
       grid: {
         drawBorder: false,
         color: 'rgba(10, 10, 10, 0.03)'
@@ -97,48 +108,31 @@ const options = {
 
 export default function LineChart () {
   const data = useMemo(function () {
-    const cutArrayx = PostData.x.filter(
-      (item, index) => PostData.cut_1 < index < PostData.cut_2
-    )
+    let Line = []
+    for (let i = 0; i < PostData.x.length; i++) {
+      Line.push(parseInt((i * 100) / 1798))
+    }
 
-    const jsonInput = PostData.y
-
-    // Esta función devuelve cuántas veces aparece un dato en el vector y
-    const occurrenceMap = Object.values(jsonInput).reduce((finalMap, item) => {
-      finalMap[item] = ++finalMap[item] || 1
-
-      return finalMap
-    }, {})
-
-    let occurrenceMapArray = Object.keys(occurrenceMap).map(function (key) {
-      return occurrenceMap[key]
-    })
-
-    // Ordenamos el vector
-    occurrenceMapSort = occurrenceMapArray.sort(function (a, b) {
-      return a - b
-    })
-
-    const labels = cutArrayx
+    const labels = PostData.x
 
     return {
       datasets: [
         {
           label: 'Sin Modelo',
-          data: labels,
-          tension: 0.3,
-          borderColor: '#4182f8',
-          pointRadius: 1,
-          backgroundColor: 'rgb(65, 130, 248, 0.3)'
-        },
-
-        {
-          label: 'Con Modelo',
-          data: occurrenceMapSort,
+          data: Line,
           tension: 0.3,
           borderColor: '#70d5b3',
           pointRadius: 1,
           backgroundColor: 'rgb(112, 213, 179, 0.25)'
+        },
+
+        {
+          label: 'Con Modelo',
+          data: PostData.y,
+          tension: 0.3,
+          borderColor: '#4182f8',
+          pointRadius: 1,
+          backgroundColor: 'rgb(65, 130, 248, 0.3)'
         }
       ],
       labels
